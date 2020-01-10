@@ -20,8 +20,8 @@ parser.add_argument("-s", "--image_size", type=int, default=None,
                     help="Size of classified image. (default=None).")
 parser.add_argument("-l", "--labels_map", type=str, default="./labels_map.txt",
                     help="Image tag. (default='./labels_map.txt').")
-parser.add_argument("-n", "--num_classes", type=int, default=1000,
-                    help="Number of categories of images. (default=1000).")
+parser.add_argument("-n", "--num_classes", type=int, default=37,
+                    help="Number of categories of images. (default=37).")
 parser.add_argument("-p", "--echo", type=bool, default=False,
                     help="Show pop ups or not? (default: False)")
 args = parser.parse_args()
