@@ -23,6 +23,8 @@ from torch.jit.annotations import Optional, Tuple
 from torch import Tensor
 from torch.utils import model_zoo
 
+from .utils import load_trained_weights
+
 __all__ = ['GoogLeNet', 'googlenet', "GoogLeNetOutputs", "_GoogLeNetOutputs"]
 
 urls_map = {
@@ -40,7 +42,7 @@ GoogLeNetOutputs.__annotations__ = {'logits': Tensor, 'aux_logits2': Optional[Te
 _GoogLeNetOutputs = GoogLeNetOutputs
 
 
-def googlenet(pretrained=False, progress=True, **kwargs):
+def googlenet(pretrained=True, progress=True, **kwargs):
     r"""GoogLeNet (Inception v1) model architecture from
     `"Going Deeper with Convolutions" <http://arxiv.org/abs/1409.4842>`_.
     Args:
@@ -225,14 +227,19 @@ class GoogLeNet(nn.Module):
 
     @classmethod
     def from_pretrained(cls, model_name, num_classes=1000):
-        model = googlenet(pretrained=True)
-        model.fc = torch.nn.Linear(1024, num_classes)
-        return model
+        model = googlenet()
+        if num_classes == 1000:
+            return model
+        else:
+            model.fc = torch.nn.Linear(1024, num_classes)
+            return model
+        
 
     @classmethod
-    def from_custom(cls, model_name, resume, num_classes):
-        model = googlenet(pretrained=True)
-        load_custom_weights(model, resume)
+    def from_name(cls, model_name, resume, num_classes):
+        assert num_classes is not None
+        model = cls.from_pretrained(model_name, num_classes)
+        load_trained_weights(model, resume)
         return model
 
 

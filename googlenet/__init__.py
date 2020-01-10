@@ -12,9 +12,12 @@
 # limitations under the License.
 # ==============================================================================
 
-__version__ = "0.1.0"
+__version__ = "0.3.0"
 
 from .model import GoogLeNet
 from .utils import adjust_learning_rate
 from .utils import accuracy
 from .utils import AverageMeter
+from .utils import get_parameter_number
+from .utils import load_trained_weights
+from .utils import print_state_dict

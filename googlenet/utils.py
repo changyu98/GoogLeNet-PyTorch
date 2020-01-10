@@ -12,34 +12,10 @@
 # limitations under the License.
 # ==============================================================================
 
-import collections
-from functools import partial
-
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.utils.model_zoo as model_zoo
 
 
-urls_map = {
-    # GoogLeNet ported from TensorFlow
-    'googlenet': 'https://download.pytorch.org/models/googlenet-1378be20.pth',
-}
-
-
-def load_pretrained_weights(model, model_name, load_fc=True):
-    """ Loads pretrained weights, and downloads if loading for the first time. """
-    state_dict = model_zoo.load_url(urls_map[model_name])
-    if load_fc:
-        model.load_state_dict(state_dict)
-    else:
-        state_dict.pop('fc.weight')
-        state_dict.pop('fc.bias')
-        model.load_state_dict(state_dict, strict=False)
-    print(f"Loaded pretrained weights for {model_name}.")
-
-
-def load_custom_weights(model, model_name):
+def load_trained_weights(model, model_name):
     """ Loads custom weights, and train if loading for the first time. """
     checkpoint = torch.load(model_name)
     model.load_state_dict(checkpoint['state_dict'])
