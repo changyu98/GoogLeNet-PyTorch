@@ -233,7 +233,6 @@ class GoogLeNet(nn.Module):
         else:
             model.fc = torch.nn.Linear(1024, num_classes)
             return model
-        
 
     @classmethod
     def from_name(cls, model_name, resume, num_classes):
